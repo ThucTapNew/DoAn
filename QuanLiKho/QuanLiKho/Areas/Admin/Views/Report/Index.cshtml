@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<table>
+    <tr>
+        <td>
+            <div id="index"></div>
+        </td>
+        
+    </tr>
+    
+</table>
+@section BaoCao{
+    <div>
+        <div>
+            <div class="alert alert-info" role="alert">
+                Mối quan tâm
+            </div>
+            <label class="radio-inline">
+                <input type="radio" name="rdbCare" id="time" value="time"> Thời gian
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="rdbCare" id="profit" value="profit"> Lợi nhuận
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="rdbCare" id="staff" value="staff"> Nhân viên
+            </label><br />
+
+        </div>
+        <p></p>
+        <div>
+            <div class="alert alert-info" role="alert">
+                Kiểu hiển thị
+            </div>
+            <label class="radio-inline">
+                <input type="radio" name="rdbDisplay" id="chart" value="chart"> Biểu đồ
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="rdbDisplay" id="report" value="report"> Báo cáo
+            </label><br />
+        </div>
+        <p></p>
+        <div>
+            <div class="alert alert-info" role="alert">
+                Lọc theo thời gian
+            </div>
+            <label class="radio-inline">
+                <input type="radio" name="rdbTime" id="month" value="month"> Tháng này
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="rdbTime" id="season" value="season"> Quý này
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="rdbTime" id="year" value="year"> Năm nay
+            </label><br />
+            <h3><small>Từ: </small></h3><input type="date" id="tu" name="tu"/>
+
+            <h3><small>Đến:</small> </h3><input type="date" id="den" onchange="Search(this)" name="den"/>
+        </div>
+    </div>
+}
+
+@section scripts{
+<script>
+    $(document).ready(function(){
+
+        $('input[type=radio][name=rdbCare]').change(function () {
+            
+            var img = document.getElementById("img");
+            $.ajax({
+                url: '@Url.Action("SaleReport", "Report")',
+                
+                data: { care: $('input[name=rdbCare]:checked').val(), time: $('input[name=rdbTime]:checked').val(), type: $('input[name=rdbDisplay]:checked').val() },
+            success: function(result){
+                console.log(result);
+                $('#index').html('<img src="data:image/png;base64,' + result + '" />');
+            },
+            error: function(result){
+                alert("error");}
+
+        });
+        });
+        $('input[type=radio][name=rdbTime]').change(function () {
+
+            var img = document.getElementById("img");
+            $.ajax({
+                url: '@Url.Action("SaleReport", "Report")',
+
+                data: { care: $('input[name=rdbCare]:checked').val(), time: $('input[name=rdbTime]:checked').val(), type: $('input[name=rdbDisplay]:checked').val() },
+                success: function (result) {
+                    console.log(result);
+                    $('#index').html('<img src="data:image/png;base64,' + result + '" />');
+                },
+                error: function (result) {
+                    alert("error");
+                }
+
+            });
+        });
+        $('input[type=radio][name=rdbDisplay]').change(function () {
+
+            var img = document.getElementById("img");
+            $.ajax({
+                url: '@Url.Action("SaleReport", "Report")',
+
+                data: { care: $('input[name=rdbCare]:checked').val(), time: $('input[name=rdbTime]:checked').val(), type: $('input[name=rdbDisplay]:checked').val() },
+                success: function (result) {
+                    console.log(result);
+                    $('#index').html('<img src="data:image/png;base64,' + result + '" />');
+                },
+                error: function (result) {
+                    alert("error");
+                }
+
+            });
+        });
+    });
+    function Search() {
+        var time1 = document.getElementById('tu').value;
+        var time2 = document.getElementById('den').value;
+        $.ajax({
+            url: '@Url.Action("Search","Report")',
+            data: { time1, time2 },
+            success: function (result) {
+                $('#index').html('<img src="data:image/png;base64,' + result + '" />');
+            },
+            error: function (result) {
+                alert("error");
+            }
+        });
+    }
+</script>
+    }

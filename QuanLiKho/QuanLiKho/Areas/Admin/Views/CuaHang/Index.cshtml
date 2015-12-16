@@ -1,0 +1,40 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.CuaHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.KhoHang.TenKho)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenCH)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhoHang.TenKho)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenCH)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaCH }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaCH }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaCH })
+        </td>
+    </tr>
+}
+
+</table>

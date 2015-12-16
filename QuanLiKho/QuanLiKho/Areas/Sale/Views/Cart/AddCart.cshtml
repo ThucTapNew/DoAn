@@ -1,0 +1,41 @@
+﻿@model List<QuanLiKho.Areas.Common.HangHoaList>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Sale/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+
+    <script src="~/Assets/Sale/js/jsFooter.js"></script>
+}
+<table class="table">
+    <thead>
+        <tr class="info">
+            <td>Mã SP</td>
+            <td>Tên SP</td>
+            <td> Số lượng</td>
+            <td>Đơn giá</td>
+            <td>Thành tiền</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="success">
+                <td>@item.Product.MaHH</td>
+                <td>@item.Product.TenHH</td>
+                <td> <input type="text" class="txtQuantity" data-id="@item.Product.MaHH" value="@item.SoLuong"> </td>
+                <td>@item.Product.GiaBan</td>
+                <td>@(item.Product.SoLuong * item.Product.GiaBan)</td>
+                <td><i class="glyphicon glyphicon-remove"> <a href="#" data-id="@item.Product.MaHH" class="btnDelete">Xóa</a></i></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<button id="btnContinue" class="btn">Tiếp tục mua hàng</button>
+<button id="btnPayment" class="btn">Thanh toán</button>
+<button id="btnUpdate" class="btn">Cập nhật giỏ hàng</button>
+<button id="btnDeleteAll" class="btn">Xóa</button>
+

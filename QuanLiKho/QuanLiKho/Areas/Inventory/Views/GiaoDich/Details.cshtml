@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<QuanLiKho.Models.Entities.CT_HoaDon>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Inventory/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <p>Hóa đơn :@ViewBag.HD</p>
+    <p>Tổng tiền : @ViewBag.Tongtien VND </p>
+    <p>Ngày : @ViewBag.Time </p>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaHH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaHH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonGia)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

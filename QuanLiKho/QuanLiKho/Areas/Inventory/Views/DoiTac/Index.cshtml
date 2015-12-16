@@ -1,0 +1,46 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.DoiTac>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Inventory/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Thêm dối tác", "Create",new { area="Inventory"})
+</p>
+<div id="ds">
+    @{ Html.RenderAction("LoadDS", "DoiTac", new { area="Admin"});}
+</div>
+@section DoiTac{
+    <div>
+        <div>
+            <h3><small>Tìm Kiếm</small></h3>
+            <input type="text" name="search" id="search" placeholder="Tên đối tác, mã đối tác, điện thoại" />
+        </div>
+        </div>
+
+    </div>
+}
+@section scripts{
+    <script>
+        $("#search").change(function () {
+            var gender = $(this).val();
+            $.ajax({
+                url: '@Url.Action("Search", "DoiTac")',
+                type: 'POST',
+                data: { gender: gender },
+                success: function (data) {
+                    $("#ds").html(data);
+                },
+                error: function (data) {
+                    alert("Bạn chưa nhập dữ liệu");
+                }
+            })
+        });
+     
+    </script>
+}
+
+

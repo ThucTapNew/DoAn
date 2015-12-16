@@ -1,0 +1,45 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.CongNo>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết nợ đối tác : @ViewBag.DT</h2>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>Mã Hóa đơn</th>
+            <th>Ngày Nhập</th>
+            <th>Tổng tiền</th>
+            <th>Nhân Viên</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaHD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoaDon.NgayTao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoaDon.TongTien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoaDon.NhanVien.FullName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { controller = "GiaoDich", area = "Admin", id = item.MaHD })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back To List", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model QuanLyKho.Models.Entities.HinhAnh
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HinhAnh</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HangHoa.TenHH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HangHoa.TenHH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenIMG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenIMG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TinhChat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhChat)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaIMG }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

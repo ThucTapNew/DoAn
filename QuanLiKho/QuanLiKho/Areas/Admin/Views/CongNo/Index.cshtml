@@ -1,0 +1,35 @@
+﻿@model IEnumerable<QuanLiKho.Areas.Admin.Models.TongNo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Nợ nhà cung cấp</h3>
+
+<table class="table">
+    <tr>
+        <th>Mã Đối Tác </th>
+        <th>Tên Đối Tác</th>
+        <th>Tổng Nợ</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+        @Html.DisplayFor(modelItem=>item.DoiTac.MaDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoiTac.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GiaTri)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.DoiTac.MaDT }) |
+        </td>
+    </tr>
+}
+
+</table>

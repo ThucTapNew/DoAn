@@ -1,0 +1,144 @@
+﻿
+@model List<QuanLiKho.Areas.Admin.Models.CartItem>
+<div>
+    <h3>Tạo hóa đơn nhập</h3>
+</div>
+<div class="container" >
+    <div style="float:left;">
+        <input type="text" name="search" id="search" placeholder="mặt hàng" />
+    </div>
+    <div style="float:left;margin-left:5px;">
+        <label for="soluong">Số Lượng</label>
+        <input type="text" name="soluong" id="soluong" />
+    </div>
+    <div style="float:left;margin-left:5px">
+        <label for="dongia">Đơn Giá</label>
+        <input type="text" name="dongia" id="dongia" />
+    </div>
+    <div style="margin-left:5px;float:left">
+        <input type="button" name="add" onclick="AddToCart()" class="btn" value="Add" />
+    </div>
+</div>
+<div style="clear:both;">
+    <div style="float:left;">
+        <label for="tongtien">Tổng tiền: <span id="tongtien">0</span> VND</label>
+    </div>
+    <div style="float:left;" class="col-md-offset-1">
+        <label for="doitac">Đối Tác:</label>
+        <input type="text" name="doitac" id="doitac" />
+    </div>
+    <div class="col-md-offset-1" style="float:left;">
+        <input type="button" name="create" onclick="Create()" value="Tạo Hóa Đơn" />
+        <p id="error" style="color:red;"></p>
+    </div>
+</div>
+<div id="cart" class="container" style="clear:both;" >
+    @{ Html.RenderAction("AddToCart", "GiaoDich");}
+</div>
+
+<script>
+    // Hiển thị danh sách gợi ý
+    $("#search").autocomplete
+        ({
+            source: function (request, response) {
+                var customer = new Array();
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    url: '@Url.Action("ProductAutoComplete", "GiaoDich")',
+                    data: { "text": request.term },
+                    success: function (data) {
+                        for (var i = 0; i < data.length ; i++) {
+                            customer[i] = { label: data[i].Value, Id: data[i].Key };
+                        }
+                    }
+                });
+                response(customer);
+            },
+            select: function (event, ui) {
+                document.getElementById("search").placeholder = ui.item.Id;
+                $("#error").html("");
+            }
+        })
+    $("#doitac").autocomplete
+          ({
+              source: function (request, response) {
+                  var customer = new Array();
+                  $.ajax({
+                      async: false,
+                      cache: false,
+                      type: "POST",
+                      url: '@Url.Action("DoiTacAutoComplete", "GiaoDich")',
+                      data: { "text": request.term },
+                      success: function (data) {
+                          for (var i = 0; i < data.length ; i++) {
+                              customer[i] = { label: data[i].Value, Id: data[i].Key };
+                          }
+                      }
+                  });
+                  response(customer);
+              },
+              select: function (event, ui) {
+                  document.getElementById("doitac").placeholder = ui.item.Id;
+                  $("#error").html("");
+              }
+          })
+    // Thêm hàng và load lại danh sách
+    function AddToCart() {
+
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("AddToCart", "GiaoDich")',
+            data: {
+                id: document.getElementById("search").placeholder,
+                soluong: document.getElementById("soluong").value,
+                dongia: document.getElementById("dongia").value
+            },
+            success: function (data) {
+                //Load lại danh sách,đặt lại giá trị null cho các text
+                $("#cart").html(data);
+                document.getElementById("search").placeholder = "Mặt hàng";
+                document.getElementById("search").value = null;
+                document.getElementById("soluong").value = null;
+                document.getElementById("dongia").value = null;
+            }
+        });
+        $.ajax({
+            url: '@Url.Action("GetTongTien","GiaoDich")',
+            type: 'POST',
+            data: {},
+            success: function (data) {
+                $("#tongtien").html(data);
+            }
+        })
+    }
+    function Create() {
+        var dt = document.getElementById("doitac");
+        var tt = document.getElementById("tongtien");
+        var condition = (dt.placeholder != null && dt.placeholder != "")
+            && (tt.textContent != "0");
+
+        if (condition) {
+            $.ajax({
+                url: '@Url.Action("Create","GiaoDich")',
+                type: 'POST',
+                data: {
+                    maDT: document.getElementById("doitac").placeholder,
+                    tongtien: document.getElementById("tongtien").textContent
+                },
+                success: function (data) {
+                    window.location.href = data;
+                }
+            })
+        }
+        else {
+            $("#error").html("Vui lòng thêm mặt hàng và lựa chọn đối tác trước khi tạo hóa đơn");
+            alert(tt.textContent + "\n" + dt.placeholder)
+        }
+    }
+
+
+</script>

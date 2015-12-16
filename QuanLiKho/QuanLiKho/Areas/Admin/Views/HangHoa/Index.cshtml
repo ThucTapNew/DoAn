@@ -1,0 +1,126 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.LoaiHang>
+
+@{
+    ViewBag.Title = "Quản lí hàng hóa";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    IEnumerable<QuanLiKho.Models.Entities.NhomHang> dsNhomHang
+        = (IEnumerable<QuanLiKho.Models.Entities.NhomHang>)ViewData["dsNhomHang"];
+
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div id="index">
+    @{ Html.RenderAction("LocLoaiHang", "HangHoa", null);}
+</div>
+@section HangHoa{
+    <div style="padding:10px;">
+        <div>
+            <label>Tìm kiếm</label>
+            <br />
+            <input type="text" name="search" />
+        </div>
+        <div id="dsLoaiHang">
+            <label>Loại Hàng</label>
+            <br />
+            @foreach (var item in Model)
+            {
+                <input type="radio" name="loaihang" value="@item.MaLH">@item.TenLH
+                <br />
+            }
+            <input type="radio" name="loaihang" value="" />Tất cả
+        </div>
+
+        <div id="dsNhomHang">
+            <label>
+                Nhóm hàng
+                <a href="NhomHang/Create" ><i class="fa fa-plus-circle fa-fw "></i></a>
+            </label>
+            <br />
+            @foreach (var item in dsNhomHang)
+            {
+                <input type="radio" name="nhomhang" value="@item.MaNH">@item.TenNH
+                <br />
+            }
+            <input type="radio" name="nhomhang" value="" /> Tất cả
+        </div>
+        <div>
+            <h3><small> Tồn kho</small></h3>
+            <input type="radio" name="tonkho" value="duoidinhmuc" /> Dưới định mức tồn
+            <br />
+            <input type="radio" name="tonkho" value="vuotdinhmuc" /> Vượt định mức tồn
+            <br />
+            <input type="radio" name="tonkho" value="dangkinhdoanh" /> Hàng đang kinh doanh
+            <br />
+            <input type="radio" name="tonkho" value="ngungkinhdoanh" /> Hàng ngừng kinh doanh
+            <br />
+            <input type="radio" name="tonkho" value="" /> Không lọc tồn kho
+        </div>
+
+    </div>
+
+}
+@section scripts{
+    <script>
+     $(function () {
+        $('input[type=radio][name=loaihang]').change(function () {
+
+            $.ajax
+                ({
+
+                    url: '@Url.Action("LocLoaiHang", "HangHoa")',
+                    type: 'POST',
+                    data: { gender: $(':radio[name="loaihang"]:checked').val() },
+                    success:function(data){
+                        $("#index").html(data);}
+                });
+        });
+    });
+        $(function () {
+            $('input[type=radio][name=nhomhang]').change(function () {
+
+                $.ajax
+                    ({
+
+                        url: '@Url.Action("LocNhomHang", "HangHoa")',
+                        type: 'POST',
+                        data: { gender: $(':radio[name="nhomhang"]:checked').val() },
+                        success: function (data) {
+                            $("#index").html(data);
+                        }
+                    });
+            });
+        });
+        $(function () {
+            $('input[type=text][name=search]').change(function () {
+
+                $.ajax
+                    ({
+
+                        url: '@Url.Action("Search", "HangHoa")',
+                        type: 'POST',
+                        data: { gender: $(':text[name="search"]').val() },
+                        success: function (data) {
+                            $("#index").html(data);
+                        }
+                    });
+            });
+        });
+        $(function () {
+            $('input[type=radio][name=tonkho]').change(function () {
+
+                $.ajax
+                    ({
+
+                        url: '@Url.Action("TonKho", "HangHoa")',
+                        type: 'POST',
+                        data: { gender: $(':radio[name="tonkho"]:checked    ').val() },
+                        success: function (data) {
+                            $("#index").html(data);
+                        }
+                    });
+            });
+        });
+    </script>
+}

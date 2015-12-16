@@ -1,0 +1,94 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.HoaDon>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Hóa đơn";
+}
+<input type="button" onclick="Create()" name="create" id="create" value="Tạo hóa đơn" />
+<div id="dsHoaDon">
+    @{ Html.RenderAction("LoaiHoaDon", "GiaoDich", null);}
+</div>
+@section GiaoDich{
+    <div style="padding:10px;">
+        <div>
+            <h3><small>Tìm kiếm</small></h3>
+            <input type="text" name="search" placeholder="mã hóa đơn,đối tác, nhân viên" />
+        </div>
+        <div>
+            <h3><small>Loại Hóa Đơn</small></h3>
+            <label class="radio-inline">
+                <input type="radio" name="loaihoadon" value="nhap" />Hóa đơn nhập
+            </label> <br />
+            <label class="radio-inline">
+                <input type="radio" name="loaihoadon" value="xuat" />Hóa đơn xuất
+            </label>  <br />
+            <label class="radio-inline">
+                <input type="radio" name="loaihoadon" value="all" /> Tất cả
+            </label>   <br />
+        </div>
+        <div>
+            <h3><small>Lọc theo thời gian</small></h3>
+            <label class="radio-inline">
+                <input type="radio" name="time" value="all"> Toàn thời gian
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="time" value="today"> Hôm nay
+            </label><br />
+            <label class="radio-inline">
+                <input type="radio" name="time" value="month"> Tháng này
+            </label><br />
+        </div>
+    </div>
+
+}
+@section scripts{
+    <script>
+        function Create() {
+            $.ajax({
+                url: '@Url.Action("TaoHoaDon","GiaoDich")',
+                type: 'POST',
+                data: {},
+                success: function (data) {
+                    $("#dsHoaDon").html(data);
+                    console.log(data);
+                    $("#create").hide();
+                }
+            });
+            document.getElementById("create").style.visibility = "hidden";
+        };
+        $(function () {
+            $('input[type=text][name=search]').change(function () {
+                $.ajax({
+                    url: '@Url.Action("Search","GiaoDich")',
+                    type: 'POST',
+                    data: { gender: $(':text[name=search]').val() }
+                }).done(function (data) {
+                    $("#dsHoaDon").html(data);
+                });
+            });
+        });
+        $(function () {
+            $('input[type=radio][name=loaihoadon]').change(function () {
+                $.ajax({
+                    url: '@Url.Action("LoaiHoaDon","GiaoDich")',
+                    type: 'POST',
+                    data: { gender: $(':radio[name=loaihoadon]:checked').val() }
+                }).done(function (data) {
+                    $("#dsHoaDon").html(data);
+                });
+            });
+        });
+        $(function () {
+            $('input[type=radio][name=time]').change(function () {
+                $.ajax({
+                    url: '@Url.Action("LocThoiGian","GiaoDich")',
+                    type: 'POST',
+                    data: { gender: $(':radio[name=time]:checked').val() }
+                }).done(function (data) {
+                    $("#dsHoaDon").html(data);
+                })
+            })
+        })
+    </script>
+
+}

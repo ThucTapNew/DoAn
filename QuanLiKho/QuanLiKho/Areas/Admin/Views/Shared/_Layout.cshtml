@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title- Quản Lí Kho</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Assets/Admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="~/Assets/Admin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="~/Assets/Admin/dist/css/timeline.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/Assets/Admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="~/Assets/Admin/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="~/Assets/Admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--jquery-ui-->
+    <link href="~/Assets/Admin/css/jquery-ui.css" rel="stylesheet" />
+    <!--Jquery library-->
+    <script src="~/Assets/Admin/js/jquery-1.11.3.js"></script>
+    <script src="~/Assets/Admin/js/jquery-ui.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Assets/Admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/Assets/Admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="~/Assets/Admin/bower_components/raphael/raphael-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Assets/Admin/dist/js/sb-admin-2.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Quản Lí Kho Hàng</a>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Thiết lập
+                        <i class="fa fa-gear fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            @Html.ActionLink("Quản lý người dùng","index","nhanvien",new { area="Admin"},null)
+                        </li>
+                        <li>
+                            <a href="#">Thông tin cửa hàng</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Tài Khoản
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>Thông tin</a>
+                        </li>
+                        <li>
+                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <div class="row" style="clear:both;">
+                <div id="navbar" class="navbar-collapse collapse col-md-6 col-md-offset-3">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Tổng quan", "Index","TongQuan", new { area = "Admin" },null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Hàng Hóa", "Index", "HangHoa", new { area = "Admin" }, new { htmlAttributes = new { @class = "dropdown-toggle", @role = "button" } })
+
+                        <li>
+                           @Html.ActionLink("Giao Dịch","Index","GiaoDich", new { area = "Admin" }, null)
+                             
+                            
+                        </li>
+                        <li>
+                            @Html.ActionLink("Đối Tác","Index","DoiTac", new { area="Admin"}, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Ngân quỹ", "Index", "NganQuy", new { area = "Admin" }, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Phiếu chi", "Index", "PhieuChi", new { area = "Admin" }, null)
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                           Báo Cáo  </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Báo cáo bán hàng</a></li>
+                                <li><a href="#">Báo cáo tài chính</a></li>
+                                <li><a href="#">Báo cáo hàng hóa</a></li>
+                                <li>@Html.ActionLink("Báo cáo cuối ngày", "Index", "ToDayReport", new { area = "Admin" }, null)</li>
+                            </ul>
+                        </li>
+                        <li>
+                           @Html.ActionLink("Công nợ", "Index", "CongNo", new { area = "Admin" }, null)
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>
+        
+        <div class="col-md-2" id="leftCol">
+
+            @RenderSection("HangHoa", false)
+            @RenderSection("GiaoDich", false)
+            @RenderSection("DoiTac", false)
+            @RenderSection("PhieuChi",false)
+            @RenderSection("CongNo", false)
+            @RenderSection("BaoCaoBanHang", false)
+        </div>
+
+        <!-- /.navbar-static-side -->
+
+        <div id="page-wrapper">
+
+            @RenderBody()
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

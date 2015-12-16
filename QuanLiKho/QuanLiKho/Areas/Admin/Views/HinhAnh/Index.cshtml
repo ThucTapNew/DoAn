@@ -1,0 +1,54 @@
+﻿@model IEnumerable<QuanLyKho.Models.Entities.HinhAnh>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HangHoa.TenHH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenIMG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathFile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TinhChat)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <p>files: </p>
+            <input type="file" name="file" id="file">
+            <input type="submit" name="submit" value="Upload" />
+        </td>
+        <td>
+         @Html.DisplayFor(modelItem => item.HangHoa.TenHH)
+        </td>
+        <td>
+            <img src="@Url.Content(item.PathFile)" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TinhChat)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaIMG }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaIMG }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaIMG })
+        </td>
+    </tr>
+}
+
+</table>

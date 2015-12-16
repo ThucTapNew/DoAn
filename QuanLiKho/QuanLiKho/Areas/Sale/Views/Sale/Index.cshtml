@@ -1,0 +1,30 @@
+﻿@model IEnumerable<QuanLiKho.Areas.Common.HHImage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Sale/Views/Shared/_Layout.cshtml";
+}
+
+
+@foreach (var item in Model)
+{
+
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <img src="@Url.Content(item.Images)" />
+            <div class="caption">
+                <h4 class="pull-right">@item.Gia</h4>
+            </div>
+            <div class="add-cart">
+                <h4>
+                    <a href="@Url.Action("AddCart","Cart", new { id = item.id, soluong = 1,tienTra = item.Gia, donGia=item.Gia ,area= "Sale" })">Them</a>
+                </h4>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+
+

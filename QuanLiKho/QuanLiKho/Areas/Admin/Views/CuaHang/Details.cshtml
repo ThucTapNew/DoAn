@@ -1,0 +1,35 @@
+﻿@model QuanLiKho.Models.Entities.CuaHang
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CuaHang</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KhoHang.TenKho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhoHang.TenKho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenCH)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCH }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

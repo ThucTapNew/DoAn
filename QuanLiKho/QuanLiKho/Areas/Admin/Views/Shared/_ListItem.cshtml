@@ -1,0 +1,24 @@
+﻿
+@model List<QuanLiKho.Areas.Admin.Models.CartItem>
+<h3> Danh sách các mặt hàng</h3>
+<table class="table">
+    <tr>
+        <th> Mã Hàng </th>
+        <th> Tên Hàng</th>
+        <th>Số Lượng</th>
+        <th> Đơn Giá</th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.MaHH</td>
+                <td>@item.Product.TenHH</td>
+                <td>@item.SoLuong</td>
+                <td>@item.DonGia</td>
+            </tr>
+        }
+    }
+</table>
+

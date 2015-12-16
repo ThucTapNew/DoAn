@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.DoiTac>
+<table class="table ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaSoThue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSoThue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+
+            <td>
+                @if (Request.Url.LocalPath.StartsWith(@"/Admin"))
+                  {
+                    @Html.ActionLink("Details", "Details", new { id = item.MaDT })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaDT }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaDT })
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { area="Inventory", id = item.MaDT })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

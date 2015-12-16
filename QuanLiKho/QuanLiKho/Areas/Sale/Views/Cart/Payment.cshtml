@@ -1,0 +1,43 @@
+﻿@model List<QuanLyKho.Areas.Common.HangHoaList>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Sale/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+
+    <script src="~/Assets/Sale/js/jsFooter.js"></script>
+}
+<table>
+
+    <tr class="info">
+        <td>Mã SP</td>
+        <td>Tên SP</td>
+        <td> Số lượng</td>
+        <td>Đơn giá</td>
+        <td>Thành tiền</td>
+    </tr>
+
+    @Html.BeginForm("Payment", "Cart", FormMethod.Post)
+    {
+    @foreach (var item in Model)
+    {
+        <tr class="success">
+            <td>
+                @Html.LabelFor(itemModel => item.Product.MaHH, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>@Html.LabelFor(itemModel => item.Product.TenHH, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+            <td>@Html.EditorFor(itemModel => item.SoLuong, new { htmlAttributes = new { @class = "form-control" } })</td>
+            <td>@Html.LabelFor(itemModel => item.Product.GiaBan, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+            <td>
+                @Html.LabelFor(itemModel => item.Product.GiaBan * item.SoLuong, htmlAttributes: new { @class = "Giatri" })
+            </td>
+        </tr>
+    }
+
+    </tbody>
+
+
+</table>
+<button type="submit">Thanh toán</button>
+}

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<QuanLiKho.Models.Entities.PhieuThuChi>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Phiếu chi</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div id="ds">
+    @{ Html.RenderAction("LocThoiGian", "PhieuChi");}
+</div>
+@section PhieuChi{
+    <div>
+        <div>
+            <h3><small>Tìm Kiếm</small></h3>
+            <input type="text" name="search" id="search" placeholder="Tên đối tác, mã phiếu, mã hóa đơn" />
+        </div>
+        <div>
+            <h3><small>Lọc theo thời gian</small></h3>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="time" value="day" /> Hôm nay
+                </label>
+
+            </div>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="time" value="month" /> Tháng này
+                </label>
+            </div>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="time" value="all" /> Toàn thời gian
+                </label>
+            </div>
+            <br />
+        </div>
+
+    </div>
+}
+@section scripts{
+    <script>
+        $("#search").change(function () {
+            var gender = $(this).val();
+            $.ajax({
+                url: '@Url.Action("Search", "PhieuChi")',
+                type: 'POST',
+                data: { gender: gender },
+                success: function (data) {
+                    $("#ds").html(data);
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("fail");
+                }
+            })
+        });
+        $(function () {
+            $('input[type=radio][name=time]').change(function () {
+                var gender = $(this).val();
+                console.log();
+                $.ajax({
+                    url: '@Url.Action("LocThoiGian","PhieuChi")',
+                    type: 'POST',
+                    data: { gender: gender },
+                    success: function (data) {
+                        $("#ds").html(data);
+                    }
+                })
+            });
+        })
+    </script>
+}
